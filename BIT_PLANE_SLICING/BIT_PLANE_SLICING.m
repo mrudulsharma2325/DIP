@@ -1,37 +1,44 @@
-% Created by Mrudul Sharma
-% Bit Plane Slicing
+% Created By Mrudul sharma
+% Define the image URL (replace with the desired image URL)
+url = ('https://images.unsplash.com/photo-1600852344090-12e843250e32?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+% Read the image from the internet
+img = imread(url);
+% Convert the image to grayscale (if it's RGB)
 
-% Read the image
-img = imread('https://images.unsplash.com/photo-1600852344090-12e843250e32?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-
-% Convert the image to grayscale if it's not already
 if size(img, 3) == 3
-    img = rgb2gray(img);
+ img = rgb2gray(img);
 end
 
 % Get the size of the image
 [rows, cols] = size(img);
-
-% Initialize the output image
-output_img = zeros(rows, cols, 'uint8');
-
-% Loop through each bit plane
-for bit = 1:8
-    % Extract the bit plane
-    bit_plane = bitget(img, bit);
-    
-    % Remove the LSB (bit 1)
-    if bit > 1
-        output_img = output_img + uint8(bit_plane * 2^(bit-1));
-    end
-end
-
-% Display the original and processed images
+% Initialize reconstruction
+reconstructed_img = zeros(rows, cols, 'uint8');
+% Create a figure to display all results
 figure;
-subplot(1, 2, 1);
+% Display the original image
+subplot(3, 4, 1);
 imshow(img);
 title('Original Image');
-
-subplot(1, 2, 2);
-imshow(output_img);
-title('Image with LSB Removed')
+% Perform Bit Plane Slicing and Reconstruction
+for k = 0:7
+ % Extract the k-th bit plane
+ bit_plane = bitget(img, k+1);
+ % Scale to full intensity for visualization
+ bit_plane_image = uint8(bit_plane * 255);
+ % Add the weighted contribution to reconstruct the image
+ reconstructed_img = reconstructed_img + uint8(bit_plane * 2^k);
+ % Display the k-th bit plane
+ subplot(3, 4, k+2);
+ imshow(bit_plane_image);
+ title(['Bit Plane ', num2str(k)]);
+end
+% Display the reconstructed image
+subplot(3, 4, 10);
+imshow(reconstructed_img);
+title('Reconstructed Image');
+% Add a super title
+sgtitle('Original Image, Bit Planes, and Reconstructed Image');
+1
+2
+Published with MATLAB® R2024b
+3
