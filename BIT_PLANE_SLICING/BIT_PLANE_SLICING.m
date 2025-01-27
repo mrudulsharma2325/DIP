@@ -38,7 +38,3 @@ imshow(reconstructed_img);
 title('Reconstructed Image');
 % Add a super title
 sgtitle('Original Image, Bit Planes, and Reconstructed Image');
-1
-2
-Published with MATLAB® R2024b
-3
