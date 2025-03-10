@@ -5,7 +5,7 @@ if size(img,3)==3
 end
 watermark=zeros(size(img));
 figure;imshow(watermark,[]);hold on;
-text(size(img,2)/2,size(img,1)/2,'DJP','FontSize',50,'Color','white','FontWeight','bold','HorizontalAlignment','center');
+text(size(img,2)/2,size(img,1)/2,'MS','FontSize',50,'Color','white','FontWeight','bold','HorizontalAlignment','center');
 frame=getframe(gca);
 watermark=frame2im(frame);
 watermark=rgb2gray(watermark);
